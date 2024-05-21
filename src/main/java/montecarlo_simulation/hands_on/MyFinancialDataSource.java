@@ -1,5 +1,6 @@
 package montecarlo_simulation.hands_on;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import montecarlo_simulation.app.FinancialDataSource;
@@ -10,14 +11,14 @@ public class MyFinancialDataSource implements FinancialDataSource {
 	/**
 	 * リスク・リターンテーブル
 	 */
-	private Table<AssetClass, RiskReturnColumn, Double> riskReturnTable;
+	private Table<AssetClass, RiskReturnColumn, Double> riskReturnTable = HashBasedTable.create();
 	/**
 	 * 相関係数テーブル
 	 */
-	private Table<AssetClass, AssetClass, Double> correlationTable;
+	private Table<AssetClass, AssetClass, Double> correlationTable = HashBasedTable.create();
 
 	public static enum RiskReturnColumn {
-		Risk, Return
+		RISK, RETURN
 	}
 
 	public MyFinancialDataSource() {
@@ -44,7 +45,7 @@ public class MyFinancialDataSource implements FinancialDataSource {
 
 	@Override
 	public double getRisk(AssetClass assetClass) {
-		return riskReturnTable.get(assetClass, RiskReturnColumn.Risk);
+		return riskReturnTable.get(assetClass, RiskReturnColumn.RISK);
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class MyFinancialDataSource implements FinancialDataSource {
 
 	@Override
 	public double getReturn(AssetClass assetClass) {
-		return riskReturnTable.get(assetClass, RiskReturnColumn.Return);
+		return riskReturnTable.get(assetClass, RiskReturnColumn.RETURN);
 	}
 
 	/**

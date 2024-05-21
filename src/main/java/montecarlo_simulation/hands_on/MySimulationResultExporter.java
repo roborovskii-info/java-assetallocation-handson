@@ -1,4 +1,4 @@
-package montecarlo_simulation.sample_implementation;
+package montecarlo_simulation.hands_on;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,37 +9,32 @@ import java.util.UUID;
 import montecarlo_simulation.app.MonteCarloSimulation.SimulationResult;
 import montecarlo_simulation.app.SimulationResultExporter;
 
-/**
- * シミュレーション結果の保存
- */
-public class SampleSimulationResultExporter implements SimulationResultExporter {
+public class MySimulationResultExporter implements SimulationResultExporter {
 
 	private File rootDir;
 
-	public SampleSimulationResultExporter(File rootDir) {
+	public MySimulationResultExporter(File rootDir) {
 		this.rootDir = rootDir;
 		rootDir.mkdirs();
 	}
 
-	/**
-	 * シミュレーション結果をエクスポートする
-	 * 
-	 * @param results シミュレーション結果
-	 */
 	@Override
 	public void exportSimulationResult(List<SimulationResult> results) {
 		long exportStartTime = System.currentTimeMillis();
 
-		results.parallelStream().forEach(r -> {
+		// 1シミュレーションごとにファイルを作成して出力する
+		// 並列処理を行って処理速度を上げる
+		for (SimulationResult result : results) {
 			File file = new File(rootDir, UUID.randomUUID().toString() + ".txt");
 			file.deleteOnExit();
 			try {
-				Files.write(file.toPath(), r.getPrices().toString().getBytes());
+				Files.write(file.toPath(), result.getPrices().toString().getBytes());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-		});
+		}
 
 		System.out.println("export time:" + (System.currentTimeMillis() - exportStartTime));
 	}
+
 }

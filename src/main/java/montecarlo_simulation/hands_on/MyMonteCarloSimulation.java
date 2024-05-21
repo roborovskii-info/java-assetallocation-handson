@@ -1,4 +1,4 @@
-package montecarlo_simulation.sample_implementation;
+package montecarlo_simulation.hands_on;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,17 @@ import montecarlo_simulation.app.MonteCarloSimulation;
 import montecarlo_simulation.app.RandomGenerator;
 import montecarlo_simulation.app.model.Portfolio;
 
-/**
- * モンテカルロシミュレーション
- */
-public class SampleMonteCarloSimulation implements MonteCarloSimulation {
+public class MyMonteCarloSimulation implements MonteCarloSimulation {
 
 	private RandomGenerator randomGenerator;
 
-	public SampleMonteCarloSimulation(RandomGenerator randomGenerator) {
+	public MyMonteCarloSimulation(RandomGenerator randomGenerator) {
 		this.randomGenerator = randomGenerator;
 	}
 
+	/**
+	 * モンテカルロシミュレーションを実行する
+	 */
 	@Override
 	public List<SimulationResult> runSimulation(Portfolio portfolio, int numberOfSimulations, int numberOfYears) {
 		double portfolioReturn = portfolio.calculatePortfolioReturn();

@@ -27,7 +27,7 @@ public class SampleGuavaFinancialDataSource implements FinancialDataSource {
 	private Table<AssetClass, AssetClass, Double> correlationTable;
 
 	public static enum RiskReturnColumn {
-		Risk, Return
+		RISK, RETURN
 	}
 
 	public SampleGuavaFinancialDataSource() {
@@ -35,22 +35,7 @@ public class SampleGuavaFinancialDataSource implements FinancialDataSource {
 		loadCorrelationMatrix();
 	}
 
-	@Override
-	public double getRisk(AssetClass assetClass) {
-		return riskReturnTable.get(assetClass, RiskReturnColumn.Risk);
-	}
-
-	@Override
-	public double getReturn(AssetClass assetClass) {
-		return riskReturnTable.get(assetClass, RiskReturnColumn.Return);
-	}
-
-	@Override
-	public double getCorrelation(AssetClass a, AssetClass b) {
-		return correlationTable.get(a, b);
-	}
-
-	public void loadRiskReturn() {
+	private void loadRiskReturn() {
 		// データをテーブルに読み込む
 		riskReturnTable = HashBasedTable.create();
 		try (InputStream is = getClass().getResourceAsStream("/risk-return.csv")) {
@@ -75,12 +60,7 @@ public class SampleGuavaFinancialDataSource implements FinancialDataSource {
 		}
 	}
 
-	/**
-	 * 相関行列を読み込む
-	 * 
-	 * @return 相関行列
-	 */
-	public void loadCorrelationMatrix() {
+	private void loadCorrelationMatrix() {
 		correlationTable = HashBasedTable.create();
 		try (InputStream is = getClass().getResourceAsStream("/correlation.csv")) {
 			List<String> lines = CharStreams.readLines(new InputStreamReader(is, "UTF-8"));
@@ -102,5 +82,20 @@ public class SampleGuavaFinancialDataSource implements FinancialDataSource {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public double getRisk(AssetClass assetClass) {
+		return riskReturnTable.get(assetClass, RiskReturnColumn.RISK);
+	}
+
+	@Override
+	public double getReturn(AssetClass assetClass) {
+		return riskReturnTable.get(assetClass, RiskReturnColumn.RETURN);
+	}
+
+	@Override
+	public double getCorrelation(AssetClass a, AssetClass b) {
+		return correlationTable.get(a, b);
 	}
 }

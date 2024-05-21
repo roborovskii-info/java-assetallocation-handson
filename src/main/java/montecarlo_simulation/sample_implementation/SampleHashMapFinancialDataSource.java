@@ -28,21 +28,6 @@ public class SampleHashMapFinancialDataSource implements FinancialDataSource {
 		loadCorrelationMatrix();
 	}
 
-	@Override
-	public double getRisk(AssetClass assetClass) {
-		return riskMap.get(assetClass);
-	}
-
-	@Override
-	public double getReturn(AssetClass assetClass) {
-		return returnMap.get(assetClass);
-	}
-
-	@Override
-	public double getCorrelation(AssetClass a, AssetClass b) {
-		return correlationMap.get(a).get(b);
-	}
-
 	private void loadRiskReturn() {
 		try (InputStream is = getClass().getResourceAsStream("/risk-return.csv")) {
 			List<String> lines = CharStreams.readLines(new InputStreamReader(is, "UTF-8"));
@@ -60,11 +45,6 @@ public class SampleHashMapFinancialDataSource implements FinancialDataSource {
 		}
 	}
 
-	/**
-	 * 相関行列を読み込む
-	 * 
-	 * @return 相関行列
-	 */
 	private void loadCorrelationMatrix() {
 		try (BufferedReader reader = new BufferedReader(
 				new InputStreamReader(getClass().getResourceAsStream("/correlation.csv")))) {
@@ -85,5 +65,20 @@ public class SampleHashMapFinancialDataSource implements FinancialDataSource {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public double getRisk(AssetClass assetClass) {
+		return riskMap.get(assetClass);
+	}
+
+	@Override
+	public double getReturn(AssetClass assetClass) {
+		return returnMap.get(assetClass);
+	}
+
+	@Override
+	public double getCorrelation(AssetClass a, AssetClass b) {
+		return correlationMap.get(a).get(b);
 	}
 }

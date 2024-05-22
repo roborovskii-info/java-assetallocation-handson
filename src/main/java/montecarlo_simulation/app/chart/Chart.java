@@ -1,6 +1,7 @@
 package montecarlo_simulation.app.chart;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.DefaultXYDataset;
@@ -97,6 +99,10 @@ public class Chart {
 			}
 		}
 		JFreeChart chart = ChartFactory.createPieChart("Portfolio", dataset, false, false, false);
+		Font font = new Font("Meiryo", Font.PLAIN, 10);
+		chart.getTitle().setFont(font);
+		PiePlot plot = (PiePlot) chart.getPlot();
+		plot.setLabelFont(font);
 		return chart;
 	}
 }

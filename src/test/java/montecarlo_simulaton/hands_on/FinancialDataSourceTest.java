@@ -15,7 +15,7 @@ public class FinancialDataSourceTest {
 	private double delta = 0.000001;
 
 	@Test
-	public void testRiskRetun() {
+	public void testRiskReturn() {
 
 		assertEquals(0.001, testDataSource.getRisk(AssetClass.DOMESTIC_SHORTTERM), delta);
 		assertEquals(0.001, testDataSource.getReturn(AssetClass.DOMESTIC_SHORTTERM), delta);
@@ -25,7 +25,7 @@ public class FinancialDataSourceTest {
 	}
 
 	@Test
-	public void testCollerationMatrix() {
+	public void testCorrelationMatrix() {
 
 		assertEquals(1, testDataSource.getCorrelation(AssetClass.DOMESTIC_SHORTTERM, AssetClass.DOMESTIC_SHORTTERM),
 				delta);
